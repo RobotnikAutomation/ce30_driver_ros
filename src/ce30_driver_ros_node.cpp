@@ -6,7 +6,10 @@ using namespace std;
 using namespace ce30_driver;
 
 ros::Publisher gPub;
-std::string gFrameID = "ce30";
+std::string gFrameID = "lidar";
+std::string ipAddress = "192.168.1.80";
+std::string topicName = "points";
+int ipPort = 2368;
 
 void DataReceiveCB(shared_ptr<PointCloud> cloud) {
   sensor_msgs::PointCloud pointcloud;
@@ -25,18 +28,30 @@ void DataReceiveCB(shared_ptr<PointCloud> cloud) {
     gPub.publish(pointcloud);
   }
 }
-
 int main(int argc, char** argv) {
   ros::init(argc, argv, "ce30_node");
+  ros::NodeHandle pnh("~");
   ros::NodeHandle nh;
-  nh.param<std::string>("frame_id", gFrameID, gFrameID);
-  gPub = nh.advertise<sensor_msgs::PointCloud>("ce30_points", 1);
+
+  pnh.param<std::string>("frame_id", gFrameID, gFrameID);
+  pnh.param<std::string>("ip_address", ipAddress, ipAddress);
+  pnh.param<std::string>("topic_name", topicName, topicName);
+  pnh.param("ip_port", ipPort, 2368);
+
+  ROS_INFO("Using frame:%s, IP: %s::%d, Topic: %s",gFrameID.c_str(), ipAddress.c_str(),ipPort, topicName.c_str());
+
+  gPub = pnh.advertise<sensor_msgs::PointCloud>(topicName, 1);
+  
   UDPServer server;
-  server.RegisterCallback(DataReceiveCB);
+  server.SetIP(ipAddress);
+  server.SetPort(ipPort);
+  server.RegisterCallback(DataReceiveCB);  
   if (!server.Start()) {
+    ROS_ERROR("Cannot connect to %s:%d", ipAddress.c_str(), ipPort); 
     return -1;
   }
+  ROS_INFO("Connected to %s:%d", ipAddress.c_str(), ipPort); 
   while (ros::ok()) {
-   	server.SpinOnce();
+    server.SpinOnce();
   }
 }
