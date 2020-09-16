@@ -34,8 +34,8 @@ int main(int argc, char** argv) {
   ros::NodeHandle nh;
 
   pnh.param<std::string>("frame_id", gFrameID, gFrameID);
-  pnh.param<std::string>("ip_address", ipAddress, ipAddress);
   pnh.param<std::string>("topic_name", topicName, topicName);
+  pnh.param<std::string>("ip_address", ipAddress, ipAddress);
   pnh.param("ip_port", ipPort, 2368);
 
   ROS_INFO("Using frame:%s, IP: %s::%d, Topic: %s",gFrameID.c_str(), ipAddress.c_str(),ipPort, topicName.c_str());

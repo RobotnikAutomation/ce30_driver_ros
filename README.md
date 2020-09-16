@@ -12,13 +12,16 @@ The `ce30_driver_ros` provides ROS interfaces to the `ce30_driver`. For more inf
 
 |         Node         | I/O  | Topic Name  | Message Type                             | Description         |
 | :------------------: | :--: | ----------- | ---------------------------------------- | ------------------- |
-| ce30_driver_ros_node | Out  | ce30_points | [sensor_msgs::PointCloud](http://docs.ros.org/api/sensor_msgs/html/msg/PointCloud.html) | CE30-D Measurements |
+| ce30_driver_ros_node | Out  | points | [sensor_msgs::PointCloud](http://docs.ros.org/api/sensor_msgs/html/msg/PointCloud.html) | CE30-D Measurements |
 
 #### Parameters
 
-|         Node         |   Name   |  Type  | Default Value | Descriptions |
-| :------------------: | :------: | :----: | :-----------: | :----------: |
-| ce30_driver_ros_node | frame_id | String |     ce30      |   Frame ID   |
+|         Node         |   Name     |  Type  | Default Value | Descriptions |
+| :------------------: | :--------: | :----: | :-----------: | :----------: |
+| ce30_driver_ros_node | frame_id   | String |    lidar      |   Frame ID   |
+| ce30_driver_ros_node | topic_name | String |    points     |   Topic      |
+| ce30_driver_ros_node | ip_address | String | 192.168.1.80  |   IP         |
+| ce30_driver_ros_node | ip_port    | Int    |    2368       |   Port       |
 
 #### Version
 
