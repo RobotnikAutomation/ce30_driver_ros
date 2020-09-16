@@ -1,0 +1,8 @@
+<launch>
+  <node name="lidar" pkg="ce30_driver_ros" type="ce30_driver_ros_node">
+    <param name="frame_id"   value="lidar" />
+    <param name="topic_name" value="points" />
+    <param name="ip_address" value="192.168.1.80" />
+    <param name="ip_port" value="2368");
+  </node>
+</launch>
